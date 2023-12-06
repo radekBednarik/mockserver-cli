@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "mockserver -logLevel DEBUG -serverPort 5999",
     "lint": "tsc --noEmit --pretty",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc",
