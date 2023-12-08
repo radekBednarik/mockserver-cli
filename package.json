@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "mockserver -logLevel DEBUG -serverPort 5999",
     "lint": "tsc --noEmit --pretty",
-    "link": "cd ./dist && npm link && chmod +x ./dist/bin/expectations.js && cd ..",
+    "link": "cd ./dist && npm link && chmod +x ./bin/expectations.js && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc",
     "prepare": "husky install"

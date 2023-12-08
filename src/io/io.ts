@@ -1,4 +1,4 @@
-import { readFile, opendir } from "node:fs/promises";
+import { readFile, opendir, access } from "node:fs/promises";
 import { resolve, join } from "node:path";
 
 export async function readJsonFile(filePath: string): Promise<any> {
@@ -34,4 +34,13 @@ export async function getAllFilePaths(directoryPath: string, fileNameEnd = ".exp
   await traverseDirectory(directoryPath);
 
   return filepaths;
+}
+
+export async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
