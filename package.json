@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "expectations": "./bin/expectations.js"
+  },
   "scripts": {
     "dev": "mockserver -logLevel DEBUG -serverPort 5999",
     "lint": "tsc --noEmit --pretty",

@@ -18,4 +18,4 @@ program
   .description("clear all expectations from the mockserver instance")
   .argument("<paths...>", "paths to the expectations files or dirs");
 
-program.command("reset-all").description("resets everything in the running mockserver instance");
+program.command("reset").description("resets everything in the running mockserver instance");
