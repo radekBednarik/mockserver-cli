@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "expectations": "./bin/expectations.js"
+    "expectations": "./dist/bin/expectations.js"
   },
   "scripts": {
     "dev": "mockserver -logLevel DEBUG -serverPort 5999",
