@@ -1,0 +1,25 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/test/endpoint"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "Hello World!"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/test/endpoint"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "message": "Hello World!",
+        "flag": "test"
+      }
+    }
+  }
+]
