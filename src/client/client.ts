@@ -4,16 +4,17 @@ import type { Expectation } from "mockserver-client/index.js";
 
 export default class Client {
   private client: MockServerClient;
-  private readonly proto: "http" | "https";
-  private readonly host: string;
-  private readonly port: number;
 
   constructor({ proto, host, port }: { proto: "http" | "https"; host: string; port: number }) {
-    this.proto = proto;
-    this.host = host;
-    this.port = port;
+    this.client = this._setupClient({ proto, host, port });
+  }
 
-    this.client = mockServerClient(`${this.proto}://${this.host}`, this.port);
+  private _setupClient({ proto, host, port }: { proto: "http" | "https"; host: string; port: number }) {
+    if (host === "localhost") {
+      return mockServerClient(`${host}`, port);
+    }
+
+    return mockServerClient(`${proto}://${host}`, port);
   }
 
   public async set(expectations: Expectation | Expectation[]) {

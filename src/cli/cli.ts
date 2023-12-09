@@ -1,4 +1,5 @@
 import { createCommand } from "commander";
+import { setHandler } from "./handlers/set.handler.js";
 
 export const program = createCommand();
 
@@ -11,9 +12,8 @@ program
   .command("set")
   .description("send prepared expectations up to the mockserver instance")
   .argument("<paths...>", "paths to the expectations files or dirs")
-  .action((paths) => {
-    // debug
-    console.log("set", paths, program.optsWithGlobals());
+  .action(async (paths) => {
+    await setHandler(paths, program.optsWithGlobals());
   });
 
 program
