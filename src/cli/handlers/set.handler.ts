@@ -16,7 +16,7 @@ async function setExpectations(client: Client, expectations: Expectation | Expec
 
     log.trace("expectations set");
   } catch (error: any) {
-    log.error("Error setting expectations:", error.message);
+    log.error("Error setting expectations:", error);
     throw error;
   }
 }
@@ -25,7 +25,7 @@ export async function setHandler(paths: string[], options: OptionValues) {
   try {
     log.trace(`Handling set command with args: ${JSON.stringify({ paths, options })}`);
 
-    const { config } = await globalOptsHandler(options);
+    const opts = await globalOptsHandler(options);
 
     const allPaths: string[] = [];
 
@@ -36,7 +36,7 @@ export async function setHandler(paths: string[], options: OptionValues) {
 
     log.trace(`All expectations filepaths resolved to: ${JSON.stringify(allPaths)}`);
 
-    const client = new Client({ proto: config.proto, host: config.host, port: config.port });
+    const client = new Client({ proto: opts["config"].proto, host: opts["config"].host, port: opts["config"].port });
 
     for (const path of allPaths) {
       const fullPath = resolve(path);

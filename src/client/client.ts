@@ -9,7 +9,7 @@ export default class Client {
   private client: MockServerClient;
 
   constructor({ proto, host, port }: { proto: "http" | "https"; host: string; port: number }) {
-    log.trace(`Creating instance of the mockserver client with args: ${JSON.stringify({ proto, host, port })}`);
+    log.trace(`Creating instance of the mockserver client with args: ${proto}, ${host}, ${port}`);
 
     this.client = this._setupClient({ proto, host, port });
 
@@ -24,7 +24,7 @@ export default class Client {
 
       return mockServerClient(`${proto}://${host}`, port);
     } catch (error: any) {
-      log.error(error.message);
+      log.error("Setting up client prop failed: ", error);
       throw error;
     }
   }

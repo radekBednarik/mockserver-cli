@@ -9,11 +9,12 @@ const transports = pino.transport({
   ],
 });
 
-export const logger = pino({
-  name: "mockserver-cli",
-  level: process.env["LOG_LEVEL"] ? process.env["LOG_LEVEL"] : "info",
-  prettyPrint: process.env["LOG_PRETTY"] ? true : false,
-  transport: transports,
-  enabled: process.env["LOG_ENABLED"] ? true : false,
-  timestamp: () => `,"time":"${new Date().toISOString()}"`,
-});
+export const logger = pino(
+  {
+    name: "mockserver-client",
+    level: process.env["LOG_LEVEL"] ? process.env["LOG_LEVEL"] : "info",
+    enabled: process.env["LOG_ENABLED"] === "false" ? false : true,
+    timestamp: () => `,"time":"${new Date().toISOString()}"`,
+  },
+  transports,
+);

@@ -21,7 +21,7 @@ export async function globalOptsHandler(options: OptionValues) {
 
     log.trace(`Global options resolved to: ${JSON.stringify(_options)}}`);
 
-    return options;
+    return _options;
   } catch (error: any) {
     log.error(error.message);
     throw error;
