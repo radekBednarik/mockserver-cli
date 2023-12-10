@@ -45,6 +45,8 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
-    "mockserver-client": "^5.15.0"
+    "mockserver-client": "^5.15.0",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3"
   }
 }
