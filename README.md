@@ -126,6 +126,4 @@ These are done via `ENV` variables.
 
 - `LOG_LEVEL` - set log level. Defaults to `info` if not provided.
 
-- `LOG_PRETTY` - set log pretty print. Defaults to `true` if not provided.
-
 - `LOG_ENABLED` - set log enabled. Defaults to `true` if not provided.
