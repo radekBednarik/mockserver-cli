@@ -10,7 +10,11 @@ const log = logger.child({ module: "setHandler" });
 
 async function setExpectations(client: Client, expectations: Expectation | Expectation[]) {
   try {
+    log.trace(`will set expectations: ${JSON.stringify(expectations)}`);
+
     await client.set(expectations);
+
+    log.trace("expectations set");
   } catch (error: any) {
     log.error("Error setting expectations:", error.message);
     throw error;
@@ -19,6 +23,8 @@ async function setExpectations(client: Client, expectations: Expectation | Expec
 
 export async function setHandler(paths: string[], options: OptionValues) {
   try {
+    log.trace(`Handling set command with args: ${JSON.stringify({ paths, options })}`);
+
     const { config } = await globalOptsHandler(options);
 
     const allPaths: string[] = [];
@@ -28,13 +34,20 @@ export async function setHandler(paths: string[], options: OptionValues) {
       allPaths.push(...expectationsPaths);
     }
 
+    log.trace(`All expectations filepaths resolved to: ${JSON.stringify(allPaths)}`);
+
     const client = new Client({ proto: config.proto, host: config.host, port: config.port });
 
     for (const path of allPaths) {
       const fullPath = resolve(path);
+
+      log.trace(`Setting expectations from file: ${fullPath}`);
+
       const expectations: Expectation[] = await readJsonFile(fullPath);
 
       await setExpectations(client, expectations);
+
+      log.trace(`Expectations set from file: ${fullPath}`);
     }
   } catch (error: any) {
     log.error(error.message);

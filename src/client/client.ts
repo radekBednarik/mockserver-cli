@@ -9,7 +9,11 @@ export default class Client {
   private client: MockServerClient;
 
   constructor({ proto, host, port }: { proto: "http" | "https"; host: string; port: number }) {
+    log.trace(`Creating instance of the mockserver client with args: ${JSON.stringify({ proto, host, port })}`);
+
     this.client = this._setupClient({ proto, host, port });
+
+    log.trace("Mockserver client instance created");
   }
 
   private _setupClient({ proto, host, port }: { proto: "http" | "https"; host: string; port: number }) {
@@ -27,7 +31,13 @@ export default class Client {
 
   public async set(expectations: Expectation | Expectation[]) {
     try {
-      return await this.client.mockAnyResponse(expectations);
+      log.trace(`Setting expectations: ${JSON.stringify(expectations)}`);
+
+      const result = await this.client.mockAnyResponse(expectations);
+
+      log.trace("Expectations set with result: ", result);
+
+      return result;
     } catch (error: any) {
       log.error(error.message);
       throw error;
@@ -36,7 +46,13 @@ export default class Client {
 
   public async clear(pathOrRequestDefinition: PathOrRequestDefinition, type: ClearType) {
     try {
-      return await this.client.clear(pathOrRequestDefinition, type);
+      log.trace(`Clearing expectations: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
+
+      const result = await this.client.clear(pathOrRequestDefinition, type);
+
+      log.trace("Expectations cleared with result: ", result);
+
+      return result;
     } catch (error: any) {
       log.error(error.message);
       throw error;
@@ -45,7 +61,13 @@ export default class Client {
 
   public async reset() {
     try {
-      return await this.client.reset();
+      log.trace("Resetting mockserver");
+
+      const result = await this.client.reset();
+
+      log.trace("Mockserver reset with result: ", result);
+
+      return result;
     } catch (error: any) {
       log.error(error.message);
       throw error;

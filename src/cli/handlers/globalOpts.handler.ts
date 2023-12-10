@@ -6,6 +6,8 @@ const log = logger.child({ module: "globalOptsHandler" });
 
 export async function globalOptsHandler(options: OptionValues) {
   try {
+    log.trace(`Handling global options: ${JSON.stringify(options)}`);
+
     const configPath = options["config"];
     const configExists = fileExists(configPath);
 
@@ -15,7 +17,11 @@ export async function globalOptsHandler(options: OptionValues) {
 
     const config = await readJsonFile(configPath);
 
-    return { config: config, concurrency: options["concurrency"] };
+    const _options = { config: config, concurrency: options["concurrency"] };
+
+    log.trace(`Global options resolved to: ${JSON.stringify(_options)}}`);
+
+    return options;
   } catch (error: any) {
     log.error(error.message);
     throw error;

@@ -12,7 +12,7 @@ const transports = pino.transport({
 export const logger = pino({
   name: "mockserver-cli",
   level: process.env["LOG_LEVEL"] ? process.env["LOG_LEVEL"] : "info",
-  prettyPrint: true,
+  prettyPrint: process.env["LOG_PRETTY"] ? true : false,
   transport: transports,
   enabled: process.env["LOG_ENABLED"] ? true : false,
   timestamp: () => `,"time":"${new Date().toISOString()}"`,
