@@ -1,35 +1,43 @@
 import Client from "../../client/client.js";
 import { getAllFilePaths, readJsonFile } from "../../io/io.js";
 import { globalOptsHandler } from "./globalOpts.handler.js";
+import { logger } from "../../log/logger.js";
 import type { OptionValues } from "commander";
 import type { Expectation } from "mockserver-client";
 import { resolve } from "path";
 
+const log = logger.child({ module: "setHandler" });
+
 async function setExpectations(client: Client, expectations: Expectation | Expectation[]) {
   try {
     await client.set(expectations);
-  } catch (error) {
-    console.error("Error setting expectations:", error);
+  } catch (error: any) {
+    log.error("Error setting expectations:", error.message);
     throw error;
   }
 }
 
 export async function setHandler(paths: string[], options: OptionValues) {
-  const { config } = await globalOptsHandler(options);
+  try {
+    const { config } = await globalOptsHandler(options);
 
-  const allPaths: string[] = [];
+    const allPaths: string[] = [];
 
-  for (const path of paths) {
-    const expectationsPaths = await getAllFilePaths(path);
-    allPaths.push(...expectationsPaths);
-  }
+    for (const path of paths) {
+      const expectationsPaths = await getAllFilePaths(path);
+      allPaths.push(...expectationsPaths);
+    }
 
-  const client = new Client({ proto: config.proto, host: config.host, port: config.port });
+    const client = new Client({ proto: config.proto, host: config.host, port: config.port });
 
-  for (const path of allPaths) {
-    const fullPath = resolve(path);
-    const expectations: Expectation[] = await readJsonFile(fullPath);
+    for (const path of allPaths) {
+      const fullPath = resolve(path);
+      const expectations: Expectation[] = await readJsonFile(fullPath);
 
-    await setExpectations(client, expectations);
+      await setExpectations(client, expectations);
+    }
+  } catch (error: any) {
+    log.error(error.message);
+    throw error;
   }
 }

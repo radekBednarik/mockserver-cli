@@ -1,13 +1,16 @@
 import { readFile, opendir, access } from "node:fs/promises";
 import { resolve, join } from "node:path";
+import { logger } from "../log/logger.js";
+
+const log = logger.child({ module: "io" });
 
 export async function readJsonFile(filePath: string): Promise<any> {
   try {
     const fileData = await readFile(resolve(filePath), "utf-8");
     const parsedData = JSON.parse(fileData);
     return parsedData;
-  } catch (error) {
-    console.error("Error reading JSON file:", error);
+  } catch (error: any) {
+    log.error("Error reading JSON file:", error.message);
     throw error;
   }
 }
@@ -31,9 +34,14 @@ export async function getAllFilePaths(directoryPath: string, fileNameEnd = ".exp
     }
   }
 
-  await traverseDirectory(directoryPath);
+  try {
+    await traverseDirectory(directoryPath);
 
-  return filepaths;
+    return filepaths;
+  } catch (error: any) {
+    log.error("Error traversing directory:", error.message);
+    throw error;
+  }
 }
 
 export async function fileExists(filePath: string): Promise<boolean> {
