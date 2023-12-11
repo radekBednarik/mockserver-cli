@@ -1,10 +1,11 @@
 import Client from "../../client/client.js";
+import PQueue from "p-queue";
 import { getAllFilePaths, readJsonFile } from "../../io/io.js";
 import { globalOptsHandler } from "./globalOpts.handler.js";
 import { logger } from "../../log/logger.js";
+import { resolve } from "path";
 import type { OptionValues } from "commander";
 import type { Expectation } from "mockserver-client";
-import { resolve } from "path";
 
 const log = logger.child({ module: "setHandler" });
 
@@ -25,6 +26,7 @@ export async function setHandler(paths: string[], options: OptionValues) {
     log.trace(`Handling set command with args: ${JSON.stringify({ paths, options })}`);
 
     const opts = await globalOptsHandler(options);
+    const concurrency = parseInt(opts["concurrency"]);
 
     const allPaths: string[] = [];
 
@@ -37,6 +39,10 @@ export async function setHandler(paths: string[], options: OptionValues) {
 
     const client = new Client({ proto: opts["config"].proto, host: opts["config"].host, port: opts["config"].port });
 
+    const queue = new PQueue({ concurrency });
+
+    log.trace(`Expectations will be set with promises concurrency: ${concurrency}`);
+
     for (const path of allPaths) {
       const fullPath = resolve(path);
 
@@ -44,7 +50,7 @@ export async function setHandler(paths: string[], options: OptionValues) {
 
       const expectations: Expectation[] = await readJsonFile(fullPath);
 
-      await setExpectations(client, expectations);
+      queue.add(() => setExpectations(client, expectations));
     }
   } catch (error: any) {
     log.error(error.message);

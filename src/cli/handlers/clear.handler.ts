@@ -4,6 +4,7 @@ import { logger } from "../../log/logger.js";
 import { getAllFilePaths, readJsonFile } from "../../io/io.js";
 import { globalOptsHandler } from "./globalOpts.handler.js";
 import { resolve } from "path";
+import PQueue from "p-queue";
 
 const log = logger.child({ module: "clearHandler" });
 
@@ -28,6 +29,7 @@ export async function clearHandler(paths: string[], options: OptionValues) {
     log.trace(`Handling clear command with args: ${JSON.stringify({ paths, options })}`);
 
     const opts = await globalOptsHandler(options);
+    const concurrency = parseInt(opts["concurrency"]);
 
     const allPaths: string[] = [];
 
@@ -44,8 +46,12 @@ export async function clearHandler(paths: string[], options: OptionValues) {
       port: opts["config"]["port"],
     });
 
+    const queue = new PQueue({ concurrency });
+
+    log.trace(`Expectations will be cleared with promises concurrency: ${concurrency}`);
+
     for (const path of allPaths) {
-      await clearExpectations(client, path);
+      queue.add(() => clearExpectations(client, path));
     }
 
     log.trace("Expectations cleared");
