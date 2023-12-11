@@ -23,6 +23,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/radekBednarik/mockserver-cli.git"
   },
+  "types": "dist/index.d.ts",
   "homepage": "https://github.com/radekBednarik/mockserver-cli/blob/main/README.md",
   "scripts": {
     "dev": "mockserver -logLevel DEBUG -serverPort 5999",
