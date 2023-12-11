@@ -1,6 +1,7 @@
 import { createCommand } from "commander";
 import { setHandler } from "./handlers/set.handler.js";
 import { clearHandler } from "./handlers/clear.handler.js";
+import { resetHandler } from "./handlers/reset.handler.js";
 
 export const program = createCommand();
 
@@ -25,4 +26,9 @@ program
     await clearHandler(paths, program.optsWithGlobals());
   });
 
-program.command("reset").description("resets everything in the running mockserver instance");
+program
+  .command("reset")
+  .description("resets all expectations and request logs in the running mockserver instance")
+  .action(async () => {
+    await resetHandler(program.optsWithGlobals());
+  });

@@ -61,7 +61,7 @@ export default class Client {
 
       const result = await this.client.reset();
 
-      log.trace("Mockserver reset with result: ", result);
+      log.trace("Mockserver reset.");
 
       return result;
     } catch (error: any) {
