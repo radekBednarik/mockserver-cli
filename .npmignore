@@ -1,0 +1,7 @@
+.husky
+node_modules
+test
+.eslintcache
+.eslintrc.cjs
+.gitignore
+tsconfig.json

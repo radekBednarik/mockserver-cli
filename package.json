@@ -1,12 +1,29 @@
 {
-  "name": "mockserver-cli",
+  "name": "@bednarik_radek/mockserver-cli",
   "version": "0.0.1",
-  "description": "",
+  "description": "CLI utility for Mock-server client. Allows for easy creation/deletion of expectations on the Mock-server instance.",
   "main": "index.js",
   "type": "module",
   "bin": {
     "expectations": "./dist/bin/expectations.js"
   },
+  "keywords": [
+    "mocks",
+    "mockserver",
+    "expectations",
+    "cli",
+    "mockserver-client",
+    "mocks",
+    "mocking",
+    "development",
+    "testing"
+  ],
+  "author": "Radek Bednarik<bednarik.radek@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:radekBednarik/mockserver-cli.git"
+  },
+  "homepage": "https://github.com/radekBednarik/mockserver-cli/blob/main/README.md",
   "scripts": {
     "dev": "mockserver -logLevel DEBUG -serverPort 5999",
     "lint": "tsc --noEmit --pretty",
@@ -15,8 +32,6 @@
     "build": "rimraf dist && tsc && npm run link",
     "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.10.3",
