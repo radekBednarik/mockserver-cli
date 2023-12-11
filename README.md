@@ -37,7 +37,7 @@ Commands:
 
 2. run `npm i` to install dependencies
 
-## How to Run Examples
+## How to Run
 
 ### Global options
 
@@ -47,18 +47,72 @@ Commands:
 npx expectations set -c ./examples/mockserver.config.json ./examples/expectations/expectation1.json
 ```
 
+#### Configuration file format
+
+Example:
+
+```json
+{
+  "host": "localhost",
+  "port": 5999,
+  "protocol": "<http|https>"
+}
+```
+
+File can be placed anywhere. If `-c` or `--config` option is not provided, program will look for `mockserver.config.json` in the current directory.
+
 #### Set concurrency
 
 ```bash
-npx expectations set --concurrency 5 ./examples/expectations/expectation1.json
+npx expectations --concurrency=5 set ./examples/expectations/expectation1.json
 ```
 
 ### Set Expectations
 
+Expectations definitions are stored in `json` files. These files can be placed anywhere.
+
+#### Expectation file format
+
+- file name must end with `.expectations.json`
+
+- file must contain array of expectations objects
+
+- see [Mockserver documentation](https://www.mock-server.com/mock_server/creating_expectations.html) for more details about expectations
+
+Example:
+
+```json
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/test/endpoint/v1"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "Hello World!"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/test/endpoint/v2"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "message": "Hello World!",
+        "flag": "test"
+      }
+    }
+  }
+]
+```
+
 #### Set Expectations from a single file
 
 ```bash
-npx expectations set ./examples/expectations/expectation1.json
+npx expectations -c=some/filepath/mockserver.config.json --concurrency=50 set ./examples/expectations/expectation1.json
 ```
 
 #### Set Expectations from multiple files
