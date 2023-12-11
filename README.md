@@ -63,6 +63,16 @@ File can be placed anywhere. If `-c` or `--config` option is not provided, progr
 
 #### Set concurrency
 
+Concurrency of promises sets, how many promises many promises will be held in the queue at max to resolve. Defaults to `10`.
+
+This limiting is applied for both `set` and `clear` commands.
+
+- `set` is limited for how many expectations requests to mock-server can be sent at once.
+
+- `clear` is limited for how many `expectations.json` files can be processed at once. If the expectations array in the file contains multiple expectations, they will be processed one by one sequentially.
+
+Uses [p-queue](https://github.com/sindresorhus/p-queue) library under the hood.
+
 ```bash
 npx expectations --concurrency=5 set ./examples/expectations/expectation1.json
 ```
