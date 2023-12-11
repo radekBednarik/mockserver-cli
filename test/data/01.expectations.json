@@ -2,7 +2,7 @@
   {
     "httpRequest": {
       "method": "GET",
-      "path": "/api/test/endpoint"
+      "path": "/api/test/endpoint/v1"
     },
     "httpResponse": {
       "statusCode": 200,
@@ -12,7 +12,7 @@
   {
     "httpRequest": {
       "method": "GET",
-      "path": "/api/test/endpoint"
+      "path": "/api/test/endpoint/v2"
     },
     "httpResponse": {
       "statusCode": 200,

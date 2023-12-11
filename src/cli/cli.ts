@@ -1,5 +1,6 @@
 import { createCommand } from "commander";
 import { setHandler } from "./handlers/set.handler.js";
+import { clearHandler } from "./handlers/clear.handler.js";
 
 export const program = createCommand();
 
@@ -19,6 +20,9 @@ program
 program
   .command("clear")
   .description("clear all expectations from the mockserver instance")
-  .argument("<paths...>", "paths to the expectations files or dirs");
+  .argument("<paths...>", "paths to the expectations files or dirs")
+  .action(async (paths) => {
+    await clearHandler(paths, program.optsWithGlobals());
+  });
 
 program.command("reset").description("resets everything in the running mockserver instance");

@@ -33,11 +33,9 @@ export default class Client {
     try {
       log.trace(`Setting expectations: ${JSON.stringify(expectations)}`);
 
-      const result = await this.client.mockAnyResponse(expectations);
+      await this.client.mockAnyResponse(expectations);
 
-      log.trace("Expectations set with result: ", result);
-
-      return result;
+      log.trace(`Expectations set: ${JSON.stringify(expectations)}`);
     } catch (error: any) {
       log.error(error.message);
       throw error;
@@ -46,13 +44,11 @@ export default class Client {
 
   public async clear(pathOrRequestDefinition: PathOrRequestDefinition, type: ClearType) {
     try {
-      log.trace(`Clearing expectations: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
+      log.trace(`Clearing expectation: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
 
-      const result = await this.client.clear(pathOrRequestDefinition, type);
+      await this.client.clear(pathOrRequestDefinition, type);
 
-      log.trace("Expectations cleared with result: ", result);
-
-      return result;
+      log.trace(`Expectations cleared: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
     } catch (error: any) {
       log.error(error.message);
       throw error;

@@ -17,7 +17,6 @@ async function setExpectations(client: Client, expectations: Expectation | Expec
     log.trace("expectations set");
   } catch (error: any) {
     log.error("Error setting expectations:", error);
-    throw error;
   }
 }
 
@@ -46,8 +45,6 @@ export async function setHandler(paths: string[], options: OptionValues) {
       const expectations: Expectation[] = await readJsonFile(fullPath);
 
       await setExpectations(client, expectations);
-
-      log.trace(`Expectations set from file: ${fullPath}`);
     }
   } catch (error: any) {
     log.error(error.message);
