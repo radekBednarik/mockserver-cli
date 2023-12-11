@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "expectations": "./dist/bin/expectations.js"
+    "expectations": "dist/bin/expectations.js"
   },
   "keywords": [
     "mocks",
@@ -21,7 +21,7 @@
   "author": "Radek Bednarik<bednarik.radek@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git@github.com:radekBednarik/mockserver-cli.git"
+    "url": "git+ssh://git@github.com/radekBednarik/mockserver-cli.git"
   },
   "homepage": "https://github.com/radekBednarik/mockserver-cli/blob/main/README.md",
   "scripts": {
