@@ -30,7 +30,8 @@
     "lint": "tsc --noEmit --pretty",
     "link": "cd ./dist && npm link && chmod +x ./bin/expectations.js && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && tsc && npm run link",
+    "devBuild": "npm run build && npm run link",
+    "build": "rimraf dist && tsc",
     "prepare": "husky install"
   },
   "license": "MIT",
