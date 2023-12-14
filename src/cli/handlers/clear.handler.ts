@@ -19,8 +19,11 @@ async function clearExpectations(client: Client, path: string) {
     }
 
     log.trace(`expectations cleared on the server - from path: ${path}`);
+
+    return;
   } catch (error: any) {
     log.error("Error clearing expectations:", error);
+    return null;
   }
 }
 
