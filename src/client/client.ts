@@ -1,7 +1,7 @@
 import { mockServerClient } from "mockserver-client";
 import type { MockServerClient, PathOrRequestDefinition, ClearType } from "mockserver-client/mockServerClient.js";
-import type { Expectation } from "mockserver-client/index.js";
-import { logger } from "../log/logger.js";
+import type { Expectation } from "mockserver-client/index";
+import { logger } from "../log/logger";
 
 const log = logger.child({ module: "client" });
 

@@ -1,7 +1,7 @@
 import { createCommand } from "commander";
-import { setHandler } from "./handlers/set.handler.js";
-import { clearHandler } from "./handlers/clear.handler.js";
-import { resetHandler } from "./handlers/reset.handler.js";
+import { setHandler } from "./handlers/set.handler";
+import { clearHandler } from "./handlers/clear.handler";
+import { resetHandler } from "./handlers/reset.handler";
 
 export const program = createCommand();
 

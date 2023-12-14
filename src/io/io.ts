@@ -1,6 +1,6 @@
 import { readFile, opendir, access } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { logger } from "../log/logger.js";
+import { logger } from "../log/logger";
 
 const log = logger.child({ module: "io" });
 
