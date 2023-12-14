@@ -1,5 +1,10 @@
 import { mockServerClient } from "mockserver-client";
-import type { MockServerClient, PathOrRequestDefinition, ClearType } from "mockserver-client/mockServerClient.js";
+import type {
+  MockServerClient,
+  PathOrRequestDefinition,
+  ClearType,
+  SuccessFullRequest,
+} from "mockserver-client/mockServerClient.js";
 import type { Expectation } from "mockserver-client/index.js";
 import { logger } from "../log/logger.js";
 
@@ -33,9 +38,11 @@ export default class Client {
     try {
       log.trace(`Setting expectations: ${JSON.stringify(expectations)}`);
 
-      await this.client.mockAnyResponse(expectations);
+      const response = (await this.client.mockAnyResponse(expectations)) as SuccessFullRequest;
 
-      log.trace(`Expectations set: ${JSON.stringify(expectations)}`);
+      log.trace(`Expectations ${JSON.stringify(expectations)} set request response: ${JSON.stringify(response)}`);
+
+      return response;
     } catch (error: any) {
       log.error(error.message);
       throw error;
@@ -46,9 +53,15 @@ export default class Client {
     try {
       log.trace(`Clearing expectation: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
 
-      await this.client.clear(pathOrRequestDefinition, type);
+      const response = (await this.client.clear(pathOrRequestDefinition, type)) as SuccessFullRequest;
 
-      log.trace(`Expectations cleared: ${JSON.stringify({ pathOrRequestDefinition, type })}`);
+      log.trace(
+        `Expectations ${JSON.stringify({ pathOrRequestDefinition, type })} clear request response: ${JSON.stringify(
+          response,
+        )}`,
+      );
+
+      return response;
     } catch (error: any) {
       log.error(error.message);
       throw error;
@@ -59,11 +72,11 @@ export default class Client {
     try {
       log.trace("Resetting mockserver");
 
-      const result = await this.client.reset();
+      const response = await this.client.reset();
 
-      log.trace("Mockserver reset.");
+      log.trace(`Mockserver reset request response: ${JSON.stringify(response)}`);
 
-      return result;
+      return response;
     } catch (error: any) {
       log.error(error.message);
       throw error;

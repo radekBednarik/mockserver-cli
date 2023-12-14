@@ -6,18 +6,18 @@ import { logger } from "../../log/logger.js";
 import { resolve } from "path";
 import type { OptionValues } from "commander";
 import type { Expectation } from "mockserver-client";
+import { SuccessFullRequest } from "mockserver-client/mockServerClient.js";
 
 const log = logger.child({ module: "setHandler" });
 
 async function setExpectations(client: Client, expectations: Expectation | Expectation[]) {
   try {
-    log.trace(`will set expectations: ${JSON.stringify(expectations)}`);
+    const response = (await client.set(expectations)) as SuccessFullRequest;
 
-    await client.set(expectations);
-
-    log.trace("expectations set");
+    return response;
   } catch (error: any) {
     log.error("Error setting expectations:", error);
+    return null;
   }
 }
 

@@ -2,6 +2,7 @@ import type { OptionValues } from "commander";
 import Client from "../../client/client.js";
 import { logger } from "../../log/logger.js";
 import { globalOptsHandler } from "./globalOpts.handler.js";
+import { SuccessFullRequest } from "mockserver-client/mockServerClient.js";
 
 const log = logger.child({ module: "resetHandler" });
 
@@ -17,11 +18,13 @@ export async function resetHandler(options: OptionValues) {
       port: opts["config"]["port"],
     });
 
-    await client.reset();
+    const response = (await client.reset()) as SuccessFullRequest;
 
     log.trace("Mockserver reset handler done.");
+
+    return response;
   } catch (error: any) {
     log.error(error.message);
-    throw error;
+    return null;
   }
 }
