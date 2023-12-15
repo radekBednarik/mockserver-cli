@@ -82,4 +82,19 @@ export default class Client {
       throw error;
     }
   }
+
+  public async getActiveExpectations(pathOrRequestDefinition: PathOrRequestDefinition) {
+    try {
+      log.trace("Getting active expectations");
+
+      const response = await this.client.retrieveActiveExpectations(pathOrRequestDefinition);
+
+      log.trace(`Active expectations request response: ${JSON.stringify(response)}`);
+
+      return response;
+    } catch (error: any) {
+      log.error(error.message);
+      throw error;
+    }
+  }
 }

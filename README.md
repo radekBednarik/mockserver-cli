@@ -19,16 +19,17 @@ npx expectations -h
 Usage: expectations [options] [command]
 
 Options:
-  -V, --version           output the version number
-  -c, --config <path>     set config path. defaults to './mockserver.config.json' (default: "./mockserver.config.json")
-  --concurrency <number>  set number of concurrent requests. defaults to '10' (default: "10")
-  -h, --help              display help for command
+  -V, --version                    output the version number
+  -c, --config <path>              set config path. defaults to './mockserver.config.json' (default: "./mockserver.config.json")
+  --concurrency <number>           set number of concurrent requests. defaults to '10' (default: "10")
+  -h, --help                       display help for command
 
 Commands:
-  set <paths...>          send prepared expectations up to the mockserver instance
-  clear <paths...>        clear all expectations from the mockserver instance
-  reset                   resets everything in the running mockserver instance
-  help [command]          display help for command
+  set <paths...>                   send prepared expectations up to the mockserver instance
+  clear <paths...>                 clear all expectations from the mockserver instance
+  reset                            resets all expectations and request logs in the running mockserver instance
+  get-active [options] <paths...>  get all active expectations from the mockserver instance
+  help [command]                   display help for command
 ```
 
 ## Installation for development
@@ -65,11 +66,13 @@ File can be placed anywhere. If `-c` or `--config` option is not provided, progr
 
 Concurrency of promises sets, how many promises many promises will be held in the queue at max to resolve. Defaults to `10`.
 
-This limiting is applied for both `set` and `clear` commands.
+This limiting is applied for both `set`, `clear` and `get-active` commands.
 
 - `set` is limited for how many expectations requests to mock-server can be sent at once.
 
 - `clear` is limited for how many `expectations.json` files can be processed at once. If the expectations array in the file contains multiple expectations, they will be processed one by one sequentially.
+
+- `get-active` is limited for how many requests to mock-server regarding active expectations for the given expectation of the `.expectations.json` file can be sent at once.
 
 Uses [p-queue](https://github.com/sindresorhus/p-queue) library under the hood.
 
@@ -172,8 +175,26 @@ npx expectations clear ./examples/expectations ./examples/expectations2
 
 ### Reset MockServer
 
+Resets all expectations and logs in the running mockserver instance.
+
 ```bash
 npx expectations reset
+```
+
+### Get Active Expectations
+
+You have to provide the path(s) to the directory or file containing the expectations.
+
+You may provide option `-s` or `--save` to save the active expectations to the `.json` file.
+
+Otherwise, the expectations are only logged to the console with `trace` log level.
+
+```bash
+# retrieves active expectations from the mockserver instance and does NOT save them to the file.
+npx expectations -c some/path/to/mockserver.config.json get-active ./examples/expectations/expectation1.json
+
+# retrieves active expectations from the mockserver instance and saves them to the file.
+npx expectations -c some/path/to/mockserver.config.json get-active examples/expectations/expectation1.json -s retrieved-active-expectations.json
 ```
 
 ## Logging
