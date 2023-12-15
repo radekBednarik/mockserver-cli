@@ -1,4 +1,4 @@
-import { readFile, opendir, access } from "node:fs/promises";
+import { readFile, opendir, access, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import { logger } from "../log/logger.js";
 
@@ -19,6 +19,21 @@ export async function readJsonFile(filePath: string): Promise<any> {
     return parsedData;
   } catch (error: any) {
     log.error("Error reading JSON file:", error.message);
+    throw error;
+  }
+}
+
+export async function saveJsonFile(filePath: string, data: any): Promise<void> {
+  try {
+    const fullPath = resolve(filePath);
+
+    log.trace(`Saving JSON file: ${fullPath} with data: ${JSON.stringify(data)}}`);
+
+    await writeFile(resolve(filePath), JSON.stringify(data, null, 2), "utf-8");
+
+    log.trace(`JSON file saved`);
+  } catch (error: any) {
+    log.error("Error saving JSON file:", error.message);
     throw error;
   }
 }
