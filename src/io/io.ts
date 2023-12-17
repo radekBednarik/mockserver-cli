@@ -26,10 +26,11 @@ export async function readJsonFile(filePath: string): Promise<any> {
 export async function saveJsonFile(filePath: string, data: any): Promise<void> {
   try {
     const fullPath = resolve(filePath);
+    const _data = JSON.stringify(data, null, 2);
 
-    log.trace(`Saving JSON file: ${fullPath} with data: ${JSON.stringify(data)}}`);
+    log.trace(`Saving JSON file: ${fullPath} with data: ${data}}`);
 
-    await writeFile(resolve(filePath), JSON.stringify(data, null, 2), "utf-8");
+    await writeFile(fullPath, _data, { encoding: "utf-8" });
 
     log.trace(`JSON file saved`);
   } catch (error: any) {
