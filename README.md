@@ -8,7 +8,7 @@ Utility for handling expectations setup, teardown and other action on [MockServe
 
 ## Installation for usage of the library
 
-1. run `npm i -g mockserver-cli`. Global installation is recommended for usage of the library. So it will be accessible from any directory.
+1. run `npm i -g @bednarik_radek/mockserver-cli`. Global installation is recommended for usage of the library. So it will be accessible from any directory.
 
 2. run `npx expectations -h` to see the list of available commands. Will display something like this:
 
