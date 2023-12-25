@@ -45,7 +45,7 @@ Commands:
 #### Set config path
 
 ```bash
-npx expectations set -c ./examples/mockserver.config.json ./examples/expectations/expectation1.json
+npx expectations -c ./examples/mockserver.config.json set ./examples/expectations/expectation1.json
 ```
 
 #### Configuration file format
