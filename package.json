@@ -1,6 +1,6 @@
 {
   "name": "@bednarik_radek/mockserver-cli",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "CLI utility for Mock-server client. Allows for easy creation/deletion of expectations on the Mock-server instance.",
   "main": "index.js",
   "type": "module",
